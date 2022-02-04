@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from "react";
+import Btn from "./Btn";
+import {useState, useEffect} from "react";
+function Todo() {
+  const [todo,setTodo] = useState("");
+  const onChange = (event) => setTodo(event.target.value);
+  const [todos,setTodos] = useState([]);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (todo===""){
+      return;
+    }
+    setTodo("");
+    setTodos((currentArray) => [todo,...currentArray]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>My Todos {todos.length}</h1>
+      <form onSubmit={onSubmit}>
+        <input 
+          onChange={onChange} 
+          type="text" 
+          placeholder="write todo list"
+          value={todo}
+        />
+        <button>Add To do</button>
+      </form>
+      <hr />
+      <ul>
+          {todos.map((todo,index)=> <li key={index}>{todo}</li>)}
+      </ul>
+
     </div>
+
   );
 }
-
-export default App;
+export default Todo;
